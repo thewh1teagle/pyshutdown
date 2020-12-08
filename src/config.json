@@ -1,5 +1,6 @@
 {
     "enabled": true,
+    "strict_mode": false,
     "days": {
             "every_day": {
                 "from": "none",

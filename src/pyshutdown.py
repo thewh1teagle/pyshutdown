@@ -5,6 +5,28 @@ import json
 
 
 
+def timenow():
+    mydate = datetime.datetime.now()
+    return datetime.datetime.strftime(mydate, '%Y-%m-%d %H:%M:%S')
+
+def convert_back_to_date_time(strftime):
+    return datetime.datetime.strptime(strftime, "%Y-%m-%d %H:%M:%S")
+
+def update_last_shutdown():
+    with open("last_shutdown.date", "w") as fp:
+        fp.write(timenow())
+
+def get_last_shutdown():
+    with open("last_shutdown.date", "r") as fp:
+        return convert_back_to_date_time(fp.read())
+
+def shutdowned_today():
+    try:
+        last_shutdown = get_last_shutdown()
+    except FileNotFoundError:
+        return False
+    return datetime.datetime.now().date() == last_shutdown.date()
+
 
 
 ARBITRARY_DATE = datetime.datetime(1988, 3, 14)
@@ -65,7 +87,7 @@ def shutdown_pc() -> None:
         os.system('C:\\Windows\\System32\\shutdown.exe -s -t 0')
     else:
         os.system('echo 1 > /proc/sys/kernel/sysrq && echo o > /proc/sysrq-trigger') # root previlegs required
-
+    update_last_shutdown()
 
 
 if __name__ == '__main__':
@@ -73,24 +95,29 @@ if __name__ == '__main__':
     with open("config.json", "r") as fp:
         config = json.load(fp)
 
+    STRICT_MODE = config['strict_mode']
+
     if config['enabled']:
         while True:
-            if config['days']['every_day']['from'] != 'none':
-                if simple_is_time_between(config['days']['every_day']['from'], config['days']['every_day']['to']):
-                    debug_print("Shutting down..")
-                    shutdown_pc()
-                else:
-                    debug_print("Time isn't between")
+            if not STRICT_MODE and shutdowned_today():
+                debug_print("Already shutdowned today, skipping...")
             else:
-                today = get_name_of_day()
-                if config['days'][today]['from'] != 'none':
-                    if simple_is_time_between(config['days'][today]['from'], config['days'][today]['to']):
+                if config['days']['every_day']['from'] != 'none':
+                    if simple_is_time_between(config['days']['every_day']['from'], config['days']['every_day']['to']):
                         debug_print("Shutting down..")
                         shutdown_pc()
                     else:
                         debug_print("Time isn't between")
                 else:
-                    debug_print("Time is none, skipping...")
-                time.sleep(15)
+                    today = get_name_of_day()
+                    if config['days'][today]['from'] != 'none':
+                        if simple_is_time_between(config['days'][today]['from'], config['days'][today]['to']):
+                            debug_print("Shutting down..")
+                            shutdown_pc()
+                        else:
+                            debug_print("Time isn't between")
+                    else:
+                        debug_print("Time is none, skipping...")
+            time.sleep(15)
     else:
         debug_print("Not enabled. exiting...")
