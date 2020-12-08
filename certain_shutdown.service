@@ -1,0 +1,14 @@
+[Unit]
+Description=certain shutdown service
+After=multi-user.target
+
+
+[Service]
+Type=idle
+User=qlorg
+WorkingDirectory=/opt/certain_shutdown/
+ExecStart=/usr/bin/python3 main.py
+
+
+[Install]
+WantedBy=basic.target
