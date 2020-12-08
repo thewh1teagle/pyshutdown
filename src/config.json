@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "days": {
+            "every_day": {
+                "from": "none",
+                "to": "none"
+            },
+            "Sunday": {
+                "from": "none",
+                "to": "none"
+            },
+            "Monday": {
+                "from": "none",
+                "to": "none"
+            },
+            "Tuesday": {
+                "from": "none",
+                "to": "none"
+            },
+            "Wednesday": {
+                "from": "23:00",
+                "to": "6:00"
+            },
+            "Thursday": {
+                "from": "none",
+                "to": "none"
+            },
+            "Friday": {
+                "from": "none",
+                "to": "none"
+            },
+            "Saturday": {
+                "from": "none",
+                "to": "none"
+            }
+    }
+}
