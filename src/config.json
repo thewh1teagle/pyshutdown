@@ -1,38 +1,38 @@
 {
-    "enabled": true,
+    "enabled": false,
     "strict_mode": false,
     "days": {
             "every_day": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Sunday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Monday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Tuesday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Wednesday": {
                 "from": "23:00",
                 "to": "6:00"
             },
             "Thursday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Friday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             },
             "Saturday": {
-                "from": "none",
-                "to": "none"
+                "from": null,
+                "to": null
             }
     }
 }
